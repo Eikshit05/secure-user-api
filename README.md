@@ -82,16 +82,29 @@ aws.region=ap-south-1
 aws.s3.bucket=your-bucket-name
 ```
 
-### 3. Start MySQL via Docker
+### 3. Configure environment variables
+
+Copy the example file and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env`:
+```env
+MYSQL_ROOT_PASSWORD=your_root_password
+MYSQL_DATABASE=hawkstack
+MYSQL_USER=your_db_user
+MYSQL_PASSWORD=your_db_password
+```
+
+> `.env` is gitignored — credentials never reach version control.
+
+### 4. Start MySQL via Docker
 
 ```bash
 docker compose up -d
 ```
-
-This starts a MySQL 8 container with:
-- Database: `hawkstack`
-- User: `hawkstack` / Password: `hawkstack123`
-- Port: `3306`
 
 Verify it's running:
 ```bash
