@@ -1,6 +1,7 @@
 package com.hawkstack.api.security;
 
 import com.hawkstack.api.user.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,6 +60,9 @@ public class SecurityConfig {
                     .requestMatchers("/api/auth/**").permitAll()
                     .anyRequest().authenticated()
             )
+            .exceptionHandling(ex -> ex
+                    .authenticationEntryPoint((request, response, authException) ->
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")))
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
